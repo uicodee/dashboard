@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSkill } from "@/shared/api/generated/skill/skill.ts";
-import MultipleSelector, { Option } from "@/shared/ui/multiselect.tsx";
 import { getOrder } from "@/shared/api/generated/order/order.ts";
 import { useCreateOrder } from "@/features/create-order";
 import { OrderInput } from "@/shared/api/model";
@@ -30,6 +29,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select";
+import MultipleSelector from "@/shared/ui/multiselect";
+import { Option } from "@/shared/ui/multiselect";
 
 export const CreateOrderForm = () => {
   const queryClient = useQueryClient();

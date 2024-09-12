@@ -7,6 +7,7 @@
 import type {
   DeleteOrder,
   EditOrder,
+  EmployeeOrder,
   OrderInput,
   OrderOutput
 } from '../../model'
@@ -37,7 +38,7 @@ const allOrdersOrderAllGet = (
 const getOrderOrderOrderIdGet = (
     orderId: number,
  options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<OrderOutput>(
+      return createInstance<EmployeeOrder>(
       {url: `/order/${orderId}`, method: 'GET'
     },
       options);
@@ -53,6 +54,17 @@ const createOrderOrderNewPost = (
       {url: `/order/new`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: orderInput
+    },
+      options);
+    }
+  /**
+ * @summary Select Random Employee
+ */
+const selectRandomEmployeeOrderOrderIdSelectRandomPost = (
+    orderId: number,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<unknown>(
+      {url: `/order/${orderId}/select-random`, method: 'POST'
     },
       options);
     }
@@ -84,9 +96,10 @@ const deleteOrdersOrderDeleteDelete = (
     },
       options);
     }
-  return {allOrdersOrderAllGet,getOrderOrderOrderIdGet,createOrderOrderNewPost,editOrderOrderEditPut,deleteOrdersOrderDeleteDelete}};
+  return {allOrdersOrderAllGet,getOrderOrderOrderIdGet,createOrderOrderNewPost,selectRandomEmployeeOrderOrderIdSelectRandomPost,editOrderOrderEditPut,deleteOrdersOrderDeleteDelete}};
 export type AllOrdersOrderAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['allOrdersOrderAllGet']>>>
 export type GetOrderOrderOrderIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['getOrderOrderOrderIdGet']>>>
 export type CreateOrderOrderNewPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['createOrderOrderNewPost']>>>
+export type SelectRandomEmployeeOrderOrderIdSelectRandomPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['selectRandomEmployeeOrderOrderIdSelectRandomPost']>>>
 export type EditOrderOrderEditPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['editOrderOrderEditPut']>>>
 export type DeleteOrdersOrderDeleteDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['deleteOrdersOrderDeleteDelete']>>>

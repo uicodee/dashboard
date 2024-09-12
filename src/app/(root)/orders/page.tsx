@@ -119,6 +119,7 @@ export default function Orders() {
           </Button>
         );
       },
+      cell: (row) => <p>{row.row.original.price.toLocaleString("en-US")}</p>,
     },
     {
       accessorKey: "technicalTask",

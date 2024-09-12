@@ -59,6 +59,18 @@ const getEmployeesEmployeeAllGet = (
       options);
     }
   /**
+ * Get employee
+ * @summary Get Employee
+ */
+const getEmployeeEmployeeEmployeeIdGet = (
+    employeeId: number,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<EmployeeOutput>(
+      {url: `/employee/${employeeId}`, method: 'GET'
+    },
+      options);
+    }
+  /**
  * Get my info
  * @summary Get Me
  */
@@ -112,10 +124,11 @@ const updateCardNumberEmployeeCardNumberPut = (
     },
       options);
     }
-  return {registerEmployeeEmployeeRegisterPost,allOrdersEmployeeOrderAllGet,getEmployeesEmployeeAllGet,getMeEmployeeMeGet,updateSkillEmployeeSkillPut,updateLanguageEmployeeLanguagePut,updateCardNumberEmployeeCardNumberPut}};
+  return {registerEmployeeEmployeeRegisterPost,allOrdersEmployeeOrderAllGet,getEmployeesEmployeeAllGet,getEmployeeEmployeeEmployeeIdGet,getMeEmployeeMeGet,updateSkillEmployeeSkillPut,updateLanguageEmployeeLanguagePut,updateCardNumberEmployeeCardNumberPut}};
 export type RegisterEmployeeEmployeeRegisterPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['registerEmployeeEmployeeRegisterPost']>>>
 export type AllOrdersEmployeeOrderAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allOrdersEmployeeOrderAllGet']>>>
 export type GetEmployeesEmployeeAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeesEmployeeAllGet']>>>
+export type GetEmployeeEmployeeEmployeeIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeeEmployeeEmployeeIdGet']>>>
 export type GetMeEmployeeMeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getMeEmployeeMeGet']>>>
 export type UpdateSkillEmployeeSkillPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateSkillEmployeeSkillPut']>>>
 export type UpdateLanguageEmployeeLanguagePutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateLanguageEmployeeLanguagePut']>>>

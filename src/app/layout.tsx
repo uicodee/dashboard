@@ -1,8 +1,11 @@
 import type {Metadata} from "next";
-import {GeistSans} from 'geist/font/sans';
+import { Onest as OnestFont } from 'next/font/google'
+
 import "./globals.css";
 import {cn} from "@/shared/ui/utils";
 import {ReactQueryClientProvider, ThemeProvider} from "@/shared/providers";
+
+const Onest = OnestFont({ subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
     title: {template: "%s | Joblance", default: "Admin | Joblance"},
@@ -18,7 +21,7 @@ export default function RootLayout({
     return (
         <ReactQueryClientProvider>
             <html lang="en" className="h-full w-full" style={{scrollbarGutter: "stable"}} suppressHydrationWarning>
-            <body className={cn(GeistSans.className, "h-full w-full")}>
+            <body className={cn(Onest.className, "h-full w-full")}>
             <ThemeProvider
                 attribute="class"
                 defaultTheme="system"

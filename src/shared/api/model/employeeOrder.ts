@@ -8,12 +8,13 @@ import type { OrderCategory } from './orderCategory';
 import type { EmployeeResponse } from './employeeResponse';
 import type { SkillOutput } from './skillOutput';
 
-export interface OrderOutput {
+export interface EmployeeOrder {
   author: string;
   category: OrderCategory;
   createdAt: string;
   deadline: number;
   id: number;
+  isAnswered: boolean;
   price: number;
   responses?: EmployeeResponse[];
   skills?: SkillOutput[];
