@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface EmployeeSkill {
-  /** */
-  skillId: number;
-}
+export type CreateOrderCategoryCategoryPostParams = {
+name: string;
+};

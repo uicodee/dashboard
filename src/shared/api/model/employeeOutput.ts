@@ -5,15 +5,18 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EmployeeOutputAbout } from './employeeOutputAbout';
+import type { EmployeeOutputActiveOrder } from './employeeOutputActiveOrder';
 import type { EmployeeOutputCardNumber } from './employeeOutputCardNumber';
+import type { EmployeeOutputCardType } from './employeeOutputCardType';
 import type { EmployeeOutputPhoneNumber } from './employeeOutputPhoneNumber';
 import type { EmployeeOutputPortfolio } from './employeeOutputPortfolio';
-import type { SkillOutput } from './skillOutput';
 
 export interface EmployeeOutput {
   about?: EmployeeOutputAbout;
+  active_order?: EmployeeOutputActiveOrder;
   balance: number;
   cardNumber?: EmployeeOutputCardNumber;
+  cardType?: EmployeeOutputCardType;
   createdAt: string;
   firstName: string;
   id: number;
@@ -23,7 +26,6 @@ export interface EmployeeOutput {
   phoneNumber?: EmployeeOutputPhoneNumber;
   portfolio?: EmployeeOutputPortfolio;
   rating: number;
-  skills?: SkillOutput[];
   telegramId: number;
   updatedAt: string;
 }

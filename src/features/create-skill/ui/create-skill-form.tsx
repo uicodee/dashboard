@@ -24,7 +24,7 @@ export const CreateSkillForm = () => {
   const setOpen = useCreateSkill((state) => state.setOpen);
   const mutation = useMutation({
     mutationFn: async (data: SkillInput) => {
-      await getSkill().createSkillSkillNewPost(data);
+      await getSkill().createSkillSkillPost(data);
     },
     onSuccess: () => {
       queryClient

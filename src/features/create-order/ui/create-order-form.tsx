@@ -37,15 +37,15 @@ export const CreateOrderForm = () => {
   const setOpen = useCreateOrder((state) => state.setOpen);
   const { data: skills, isFetched } = useQuery({
     queryKey: ["skills"],
-    queryFn: () => getSkill().allSkillsSkillAllGet(),
+    queryFn: () => getSkill().allSkillsSkillGet(),
   });
   const { data: categories } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => getCategory().allOrderCategoriesCategoryAllGet(),
+    queryFn: () => getCategory().allOrderCategoriesCategoryGet(),
   });
   const mutation = useMutation({
     mutationFn: async (data: OrderInput) => {
-      await getOrder().createOrderOrderNewPost(data);
+      await getOrder().createOrderOrderPost(data);
     },
     onSuccess: () => {
       queryClient

@@ -6,9 +6,7 @@
  */
 
 export interface OrderCategory {
-  createdAt: string;
   icon: string;
   id: number;
   name: string;
-  updatedAt: string;
 }

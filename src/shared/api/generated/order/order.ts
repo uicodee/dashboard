@@ -7,7 +7,6 @@
 import type {
   DeleteOrder,
   EditOrder,
-  EmployeeOrder,
   OrderInput,
   OrderOutput
 } from '../../model'
@@ -23,11 +22,53 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
  * Get all orders
  * @summary All Orders
  */
-const allOrdersOrderAllGet = (
+const allOrdersOrderGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderOutput[]>(
-      {url: `/order/all`, method: 'GET'
+      {url: `/order`, method: 'GET'
+    },
+      options);
+    }
+  /**
+ * Edit order
+ * @summary Edit Order
+ */
+const editOrderOrderPut = (
+    editOrder: BodyType<EditOrder>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderOutput>(
+      {url: `/order`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: editOrder
+    },
+      options);
+    }
+  /**
+ * Create new order
+ * @summary Create Order
+ */
+const createOrderOrderPost = (
+    orderInput: BodyType<OrderInput>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderOutput>(
+      {url: `/order`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: orderInput
+    },
+      options);
+    }
+  /**
+ * Delete orders
+ * @summary Delete Orders
+ */
+const deleteOrdersOrderDelete = (
+    deleteOrder: BodyType<DeleteOrder>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<unknown>(
+      {url: `/order`, method: 'DELETE',
+      headers: {'Content-Type': 'application/json', },
+      data: deleteOrder
     },
       options);
     }
@@ -38,22 +79,8 @@ const allOrdersOrderAllGet = (
 const getOrderOrderOrderIdGet = (
     orderId: number,
  options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<EmployeeOrder>(
-      {url: `/order/${orderId}`, method: 'GET'
-    },
-      options);
-    }
-  /**
- * Create new order
- * @summary Create Order
- */
-const createOrderOrderNewPost = (
-    orderInput: BodyType<OrderInput>,
- options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderOutput>(
-      {url: `/order/new`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: orderInput
+      {url: `/order/${orderId}`, method: 'GET'
     },
       options);
     }
@@ -68,38 +95,10 @@ const selectRandomEmployeeOrderOrderIdSelectRandomPost = (
     },
       options);
     }
-  /**
- * Edit order
- * @summary Edit Order
- */
-const editOrderOrderEditPut = (
-    editOrder: BodyType<EditOrder>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<OrderOutput>(
-      {url: `/order/edit`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: editOrder
-    },
-      options);
-    }
-  /**
- * Delete orders
- * @summary Delete Orders
- */
-const deleteOrdersOrderDeleteDelete = (
-    deleteOrder: BodyType<DeleteOrder>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<unknown>(
-      {url: `/order/delete`, method: 'DELETE',
-      headers: {'Content-Type': 'application/json', },
-      data: deleteOrder
-    },
-      options);
-    }
-  return {allOrdersOrderAllGet,getOrderOrderOrderIdGet,createOrderOrderNewPost,selectRandomEmployeeOrderOrderIdSelectRandomPost,editOrderOrderEditPut,deleteOrdersOrderDeleteDelete}};
-export type AllOrdersOrderAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['allOrdersOrderAllGet']>>>
+  return {allOrdersOrderGet,editOrderOrderPut,createOrderOrderPost,deleteOrdersOrderDelete,getOrderOrderOrderIdGet,selectRandomEmployeeOrderOrderIdSelectRandomPost}};
+export type AllOrdersOrderGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['allOrdersOrderGet']>>>
+export type EditOrderOrderPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['editOrderOrderPut']>>>
+export type CreateOrderOrderPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['createOrderOrderPost']>>>
+export type DeleteOrdersOrderDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['deleteOrdersOrderDelete']>>>
 export type GetOrderOrderOrderIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['getOrderOrderOrderIdGet']>>>
-export type CreateOrderOrderNewPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['createOrderOrderNewPost']>>>
 export type SelectRandomEmployeeOrderOrderIdSelectRandomPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['selectRandomEmployeeOrderOrderIdSelectRandomPost']>>>
-export type EditOrderOrderEditPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['editOrderOrderEditPut']>>>
-export type DeleteOrdersOrderDeleteDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['deleteOrdersOrderDeleteDelete']>>>

@@ -12,7 +12,7 @@ import { ArrowUpDown } from "lucide-react";
 export default function Employees() {
   const { data: employees, isLoading } = useQuery({
     queryKey: ["employees"],
-    queryFn: () => getEmployee().getEmployeesEmployeeAllGet(),
+    queryFn: () => getEmployee().getEmployeesEmployeeGet(),
   });
   const data = employees || [];
   const columns: ColumnDef<EmployeeOutput>[] = [

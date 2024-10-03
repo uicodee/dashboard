@@ -6,6 +6,7 @@
  */
 import type {
   EmployeeCardNumber,
+  EmployeeCardType,
   EmployeeInput,
   EmployeeLanguage,
   EmployeeOutput,
@@ -38,11 +39,11 @@ const registerEmployeeEmployeeRegisterPost = (
  * Get all orders
  * @summary All Orders
  */
-const allOrdersEmployeeOrderAllGet = (
+const allOrdersEmployeeOrderGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderOutput[]>(
-      {url: `/employee/order/all`, method: 'GET'
+      {url: `/employee/order`, method: 'GET'
     },
       options);
     }
@@ -50,23 +51,11 @@ const allOrdersEmployeeOrderAllGet = (
  * Get all employees
  * @summary Get Employees
  */
-const getEmployeesEmployeeAllGet = (
+const getEmployeesEmployeeGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<EmployeeOutput[]>(
-      {url: `/employee/all`, method: 'GET'
-    },
-      options);
-    }
-  /**
- * Get employee
- * @summary Get Employee
- */
-const getEmployeeEmployeeEmployeeIdGet = (
-    employeeId: number,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<EmployeeOutput>(
-      {url: `/employee/${employeeId}`, method: 'GET'
+      {url: `/employee`, method: 'GET'
     },
       options);
     }
@@ -124,12 +113,39 @@ const updateCardNumberEmployeeCardNumberPut = (
     },
       options);
     }
-  return {registerEmployeeEmployeeRegisterPost,allOrdersEmployeeOrderAllGet,getEmployeesEmployeeAllGet,getEmployeeEmployeeEmployeeIdGet,getMeEmployeeMeGet,updateSkillEmployeeSkillPut,updateLanguageEmployeeLanguagePut,updateCardNumberEmployeeCardNumberPut}};
+  /**
+ * Update card type
+ * @summary Update Card Type
+ */
+const updateCardTypeEmployeeCardTypePut = (
+    employeeCardType: BodyType<EmployeeCardType>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<unknown>(
+      {url: `/employee/card-type`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: employeeCardType
+    },
+      options);
+    }
+  /**
+ * Get employee
+ * @summary Get Employee
+ */
+const getEmployeeEmployeeEmployeeIdGet = (
+    employeeId: number,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<EmployeeOutput>(
+      {url: `/employee/${employeeId}`, method: 'GET'
+    },
+      options);
+    }
+  return {registerEmployeeEmployeeRegisterPost,allOrdersEmployeeOrderGet,getEmployeesEmployeeGet,getMeEmployeeMeGet,updateSkillEmployeeSkillPut,updateLanguageEmployeeLanguagePut,updateCardNumberEmployeeCardNumberPut,updateCardTypeEmployeeCardTypePut,getEmployeeEmployeeEmployeeIdGet}};
 export type RegisterEmployeeEmployeeRegisterPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['registerEmployeeEmployeeRegisterPost']>>>
-export type AllOrdersEmployeeOrderAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allOrdersEmployeeOrderAllGet']>>>
-export type GetEmployeesEmployeeAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeesEmployeeAllGet']>>>
-export type GetEmployeeEmployeeEmployeeIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeeEmployeeEmployeeIdGet']>>>
+export type AllOrdersEmployeeOrderGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allOrdersEmployeeOrderGet']>>>
+export type GetEmployeesEmployeeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeesEmployeeGet']>>>
 export type GetMeEmployeeMeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getMeEmployeeMeGet']>>>
 export type UpdateSkillEmployeeSkillPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateSkillEmployeeSkillPut']>>>
 export type UpdateLanguageEmployeeLanguagePutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateLanguageEmployeeLanguagePut']>>>
 export type UpdateCardNumberEmployeeCardNumberPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateCardNumberEmployeeCardNumberPut']>>>
+export type UpdateCardTypeEmployeeCardTypePutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateCardTypeEmployeeCardTypePut']>>>
+export type GetEmployeeEmployeeEmployeeIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeeEmployeeEmployeeIdGet']>>>

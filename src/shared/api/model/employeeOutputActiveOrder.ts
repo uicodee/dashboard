@@ -4,8 +4,6 @@
  * FastAPI
  * OpenAPI spec version: 1.0.0
  */
+import type { OrderOutput } from './orderOutput';
 
-export interface EmployeeSkill {
-  /** */
-  skillId: number;
-}
+export type EmployeeOutputActiveOrder = OrderOutput | null;

@@ -33,7 +33,7 @@ export const CreateCategoryForm = () => {
       data: BodyCreateOrderCategoryCategoryNewPost;
       params: CreateOrderCategoryCategoryNewPostParams;
     }) => {
-      await getCategory().createOrderCategoryCategoryNewPost(data, params);
+      await getCategory().createOrderCategoryCategoryPost(data, params);
     },
     onSuccess: () => {
       queryClient

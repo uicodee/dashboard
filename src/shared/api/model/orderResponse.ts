@@ -7,8 +7,6 @@
 import type { OrderOutput } from './orderOutput';
 
 export interface OrderResponse {
-  createdAt: string;
   id: number;
   order: OrderOutput;
-  updatedAt: string;
 }

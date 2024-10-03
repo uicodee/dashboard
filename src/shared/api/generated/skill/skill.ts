@@ -22,25 +22,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
  * Get all skills
  * @summary All Skills
  */
-const allSkillsSkillAllGet = (
+const allSkillsSkillGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<SkillOutput[]>(
-      {url: `/skill/all`, method: 'GET'
-    },
-      options);
-    }
-  /**
- * Create new skill
- * @summary Create Skill
- */
-const createSkillSkillNewPost = (
-    skillInput: BodyType<SkillInput>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<SkillOutput>(
-      {url: `/skill/new`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: skillInput
+      {url: `/skill`, method: 'GET'
     },
       options);
     }
@@ -48,13 +34,27 @@ const createSkillSkillNewPost = (
  * Update skill
  * @summary Update Skill
  */
-const updateSkillSkillUpdatePut = (
+const updateSkillSkillPut = (
     updateSkill: BodyType<UpdateSkill>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<SkillOutput>(
-      {url: `/skill/update`, method: 'PUT',
+      {url: `/skill`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
       data: updateSkill
+    },
+      options);
+    }
+  /**
+ * Create new skill
+ * @summary Create Skill
+ */
+const createSkillSkillPost = (
+    skillInput: BodyType<SkillInput>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<SkillOutput>(
+      {url: `/skill`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: skillInput
     },
       options);
     }
@@ -62,18 +62,18 @@ const updateSkillSkillUpdatePut = (
  * Delete skill
  * @summary Delete Skill
  */
-const deleteSkillSkillDeleteDelete = (
+const deleteSkillSkillDelete = (
     deleteSkill: BodyType<DeleteSkill>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<unknown>(
-      {url: `/skill/delete`, method: 'DELETE',
+      {url: `/skill`, method: 'DELETE',
       headers: {'Content-Type': 'application/json', },
       data: deleteSkill
     },
       options);
     }
-  return {allSkillsSkillAllGet,createSkillSkillNewPost,updateSkillSkillUpdatePut,deleteSkillSkillDeleteDelete}};
-export type AllSkillsSkillAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['allSkillsSkillAllGet']>>>
-export type CreateSkillSkillNewPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['createSkillSkillNewPost']>>>
-export type UpdateSkillSkillUpdatePutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['updateSkillSkillUpdatePut']>>>
-export type DeleteSkillSkillDeleteDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['deleteSkillSkillDeleteDelete']>>>
+  return {allSkillsSkillGet,updateSkillSkillPut,createSkillSkillPost,deleteSkillSkillDelete}};
+export type AllSkillsSkillGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['allSkillsSkillGet']>>>
+export type UpdateSkillSkillPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['updateSkillSkillPut']>>>
+export type CreateSkillSkillPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['createSkillSkillPost']>>>
+export type DeleteSkillSkillDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSkill>['deleteSkillSkillDelete']>>>

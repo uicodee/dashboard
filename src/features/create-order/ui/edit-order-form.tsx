@@ -24,11 +24,11 @@ export const EditOrderForm = () => {
   const queryClient = useQueryClient();
   const { data: skills, isLoading } = useQuery({
     queryKey: ["skills"],
-    queryFn: () => getSkill().allSkillsSkillAllGet(),
+    queryFn: () => getSkill().allSkillsSkillGet(),
   });
   const mutation = useMutation({
     mutationFn: async (data: OrderInput) => {
-      await getOrder().createOrderOrderNewPost(data);
+      await getOrder().createOrderOrderPost(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["order"] });

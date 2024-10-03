@@ -5,8 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { OrderCategory } from './orderCategory';
-import type { EmployeeResponse } from './employeeResponse';
-import type { SkillOutput } from './skillOutput';
 
 export interface OrderOutput {
   author: string;
@@ -15,8 +13,6 @@ export interface OrderOutput {
   deadline: number;
   id: number;
   price: number;
-  responses?: EmployeeResponse[];
-  skills?: SkillOutput[];
   /**
    * @minLength 1
    * @maxLength 2083

@@ -5,7 +5,7 @@ import {
   CreateCategoryModal,
 } from "@/features/create-category";
 import { getCategory } from "@/shared/api/generated/category/category";
-import { OrderCategoryOutput } from "@/shared/api/model";
+import { OrderCategory } from "@/shared/api/model";
 import { Button } from "@/shared/ui/button";
 import { DataCard } from "@/widgets/data-card";
 import { DataTable } from "@/widgets/data-table";
@@ -16,10 +16,10 @@ import { ArrowUpDown } from "lucide-react";
 export default function Page() {
   const { data: categories, isLoading } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => getCategory().allOrderCategoriesCategoryAllGet(),
+    queryFn: () => getCategory().allOrderCategoriesCategoryGet(),
   });
   const data = categories || [];
-  const columns: ColumnDef<OrderCategoryOutput>[] = [
+  const columns: ColumnDef<OrderCategory>[] = [
     {
       accessorKey: "icon",
       header: "Icon",

@@ -18,11 +18,10 @@ export default function Orders() {
   const queryClient = useQueryClient();
   const { data: orders, isLoading } = useQuery({
     queryKey: ["orders"],
-    queryFn: () => getOrder().allOrdersOrderAllGet(),
+    queryFn: () => getOrder().allOrdersOrderGet(),
   });
   const mutation = useMutation({
-    mutationFn: (data: DeleteOrder) =>
-      getOrder().deleteOrdersOrderDeleteDelete(data),
+    mutationFn: (data: DeleteOrder) => getOrder().deleteOrdersOrderDelete(data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["orders"] }),
   });
 

@@ -4,9 +4,11 @@
  * FastAPI
  * OpenAPI spec version: 1.0.0
  */
+import type { EmployeeInputLanguage } from './employeeInputLanguage';
 
 export interface EmployeeInput {
   firstName: string;
+  language?: EmployeeInputLanguage;
   lastName: string;
   telegramId: number;
 }

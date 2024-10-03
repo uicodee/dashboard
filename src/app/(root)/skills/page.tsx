@@ -15,11 +15,10 @@ export default function Skills() {
   const queryClient = useQueryClient();
   const { data: skills, isLoading } = useQuery({
     queryKey: ["skills"],
-    queryFn: () => getSkill().allSkillsSkillAllGet(),
+    queryFn: () => getSkill().allSkillsSkillGet(),
   });
   const mutation = useMutation({
-    mutationFn: (data: DeleteSkill) =>
-      getSkill().deleteSkillSkillDeleteDelete(data),
+    mutationFn: (data: DeleteSkill) => getSkill().deleteSkillSkillDelete(data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["skills"] }),
   });
   const data = skills || [];

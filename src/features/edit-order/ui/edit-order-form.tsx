@@ -37,15 +37,15 @@ export const EditOrderForm = () => {
   const setOpen = useEditOrder((state) => state.setOpen);
   const { data: skills, isLoading } = useQuery({
     queryKey: ["skills"],
-    queryFn: () => getSkill().allSkillsSkillAllGet(),
+    queryFn: () => getSkill().allSkillsSkillGet(),
   });
   const { data: categories } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => getCategory().allOrderCategoriesCategoryAllGet(),
+    queryFn: () => getCategory().allOrderCategoriesCategoryGet(),
   });
   const mutation = useMutation({
     mutationFn: async (data: EditOrder) => {
-      await getOrder().editOrderOrderEditPut(data);
+      await getOrder().editOrderOrderPut(data);
     },
     onSuccess: () => {
       queryClient
@@ -62,10 +62,10 @@ export const EditOrderForm = () => {
       technicalTask: order?.technicalTask,
       price: order?.price,
       categoryId: order?.category.id,
-      skillsIds: order?.skills?.map((skill) => ({
-        value: String(skill.id),
-        label: skill.name,
-      })),
+      // skillsIds: order?.skills?.map((skill) => ({
+      //   value: String(skill.id),
+      //   label: skill.name,
+      // })),
     },
   });
 

@@ -5,8 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
-  BodyCreateOrderCategoryCategoryNewPost,
-  CreateOrderCategoryCategoryNewPostParams,
+  BodyCreateOrderCategoryCategoryPost,
+  CreateOrderCategoryCategoryPostParams,
   DeleteOrderCategory,
   OrderCategory
 } from '../../model'
@@ -22,11 +22,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
  * Get all order categories
  * @summary All Order Categories
  */
-const allOrderCategoriesCategoryAllGet = (
+const allOrderCategoriesCategoryGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderCategory[]>(
-      {url: `/category/all`, method: 'GET'
+      {url: `/category`, method: 'GET'
     },
       options);
     }
@@ -34,14 +34,14 @@ const allOrderCategoriesCategoryAllGet = (
  * Create new order category
  * @summary Create Order Category
  */
-const createOrderCategoryCategoryNewPost = (
-    bodyCreateOrderCategoryCategoryNewPost: BodyType<BodyCreateOrderCategoryCategoryNewPost>,
-    params: CreateOrderCategoryCategoryNewPostParams,
+const createOrderCategoryCategoryPost = (
+    bodyCreateOrderCategoryCategoryPost: BodyType<BodyCreateOrderCategoryCategoryPost>,
+    params: CreateOrderCategoryCategoryPostParams,
  options?: SecondParameter<typeof createInstance>,) => {const formData = new FormData();
-formData.append('file', bodyCreateOrderCategoryCategoryNewPost.file)
+formData.append('file', bodyCreateOrderCategoryCategoryPost.file)
 
       return createInstance<OrderCategory>(
-      {url: `/category/new`, method: 'POST',
+      {url: `/category`, method: 'POST',
       headers: {'Content-Type': 'multipart/form-data', },
        data: formData,
         params
@@ -52,17 +52,17 @@ formData.append('file', bodyCreateOrderCategoryCategoryNewPost.file)
  * Delete order categories
  * @summary Delete Order Categories
  */
-const deleteOrderCategoriesCategoryDeleteDelete = (
+const deleteOrderCategoriesCategoryDelete = (
     deleteOrderCategory: BodyType<DeleteOrderCategory>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<unknown>(
-      {url: `/category/delete`, method: 'DELETE',
+      {url: `/category`, method: 'DELETE',
       headers: {'Content-Type': 'application/json', },
       data: deleteOrderCategory
     },
       options);
     }
-  return {allOrderCategoriesCategoryAllGet,createOrderCategoryCategoryNewPost,deleteOrderCategoriesCategoryDeleteDelete}};
-export type AllOrderCategoriesCategoryAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getCategory>['allOrderCategoriesCategoryAllGet']>>>
-export type CreateOrderCategoryCategoryNewPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getCategory>['createOrderCategoryCategoryNewPost']>>>
-export type DeleteOrderCategoriesCategoryDeleteDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getCategory>['deleteOrderCategoriesCategoryDeleteDelete']>>>
+  return {allOrderCategoriesCategoryGet,createOrderCategoryCategoryPost,deleteOrderCategoriesCategoryDelete}};
+export type AllOrderCategoriesCategoryGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getCategory>['allOrderCategoriesCategoryGet']>>>
+export type CreateOrderCategoryCategoryPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getCategory>['createOrderCategoryCategoryPost']>>>
+export type DeleteOrderCategoriesCategoryDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getCategory>['deleteOrderCategoriesCategoryDelete']>>>
