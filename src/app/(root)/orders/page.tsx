@@ -63,6 +63,17 @@ export default function Orders() {
       },
     },
     {
+      accessorKey: "category",
+      header: "Category",
+      cell: (row) => {
+        return <img src={row.row.original.category.icon} className="size-9" />;
+      },
+    },
+    {
+      accessorKey: "title",
+      header: "Title",
+    },
+    {
       accessorKey: "createdAt",
       header: ({ column }) => {
         return (
@@ -75,17 +86,6 @@ export default function Orders() {
           </Button>
         );
       },
-    },
-    {
-      accessorKey: "category",
-      header: "Category",
-      cell: (row) => {
-        return <img src={row.row.original.category.icon} className="size-9" />;
-      },
-    },
-    {
-      accessorKey: "title",
-      header: "Title",
     },
     {
       accessorKey: "author",
@@ -147,6 +147,7 @@ export default function Orders() {
         }
         onRowClick={() => setOpen(true)}
         setData={(data) => setOrder(data)}
+        filterFields={[{ name: "Author", key: "author" }]}
       />
     </DataCard>
   );

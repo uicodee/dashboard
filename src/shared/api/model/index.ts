@@ -34,6 +34,7 @@ export * from './employeeOutputPortfolio';
 export * from './employeeResponse';
 export * from './employeeSkill';
 export * from './hTTPValidationError';
+export * from './loginUser';
 export * from './mail';
 export * from './orderCategory';
 export * from './orderCategoryInput';

@@ -11,7 +11,8 @@ import type {
   EmployeeLanguage,
   EmployeeOutput,
   EmployeeSkill,
-  OrderOutput
+  OrderOutput,
+  SkillOutput
 } from '../../model'
 import { createInstance } from '../../http/index';
 import type { BodyType } from '../../http/index';
@@ -32,6 +33,18 @@ const registerEmployeeEmployeeRegisterPost = (
       {url: `/employee/register`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: employeeInput
+    },
+      options);
+    }
+  /**
+ * Get all skills
+ * @summary All Employee Skills
+ */
+const allEmployeeSkillsEmployeeSkillsGet = (
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<SkillOutput[]>(
+      {url: `/employee/skills`, method: 'GET'
     },
       options);
     }
@@ -139,8 +152,9 @@ const getEmployeeEmployeeEmployeeIdGet = (
     },
       options);
     }
-  return {registerEmployeeEmployeeRegisterPost,allOrdersEmployeeOrderGet,getEmployeesEmployeeGet,getMeEmployeeMeGet,updateSkillEmployeeSkillPut,updateLanguageEmployeeLanguagePut,updateCardNumberEmployeeCardNumberPut,updateCardTypeEmployeeCardTypePut,getEmployeeEmployeeEmployeeIdGet}};
+  return {registerEmployeeEmployeeRegisterPost,allEmployeeSkillsEmployeeSkillsGet,allOrdersEmployeeOrderGet,getEmployeesEmployeeGet,getMeEmployeeMeGet,updateSkillEmployeeSkillPut,updateLanguageEmployeeLanguagePut,updateCardNumberEmployeeCardNumberPut,updateCardTypeEmployeeCardTypePut,getEmployeeEmployeeEmployeeIdGet}};
 export type RegisterEmployeeEmployeeRegisterPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['registerEmployeeEmployeeRegisterPost']>>>
+export type AllEmployeeSkillsEmployeeSkillsGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allEmployeeSkillsEmployeeSkillsGet']>>>
 export type AllOrdersEmployeeOrderGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allOrdersEmployeeOrderGet']>>>
 export type GetEmployeesEmployeeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeesEmployeeGet']>>>
 export type GetMeEmployeeMeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getMeEmployeeMeGet']>>>

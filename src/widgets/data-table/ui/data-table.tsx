@@ -24,7 +24,7 @@ import {
 } from "@/shared/ui/table";
 import { Button } from "@/shared/ui/button";
 import { ChevronLeft, ChevronRight, Filter, Trash } from "lucide-react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Input } from "@/shared/ui/input";
 import {
   DropdownMenu,
@@ -33,6 +33,13 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Skeleton } from "@/shared/ui/skeleton";
+import * as React from "react";
+import { DataTableFacetedFilter } from "@/widgets/data-table";
+
+interface FilterField {
+  name: string;
+  key: string;
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,6 +48,17 @@ interface DataTableProps<TData, TValue> {
   onDelete?: (data: TData[]) => void;
   onRowClick?: () => void;
   setData?: (data: TData) => void;
+  filterFields?: FilterField[];
+  facetedFilters?: {
+    icon?: React.ComponentType<{ className?: string }>;
+    columnName: string;
+    title: string;
+    options: {
+      label: string;
+      value: string;
+      icon?: React.ComponentType<{ className?: string }>;
+    }[];
+  }[];
 }
 
 export function DataTable<TData, TValue>({
@@ -50,6 +68,8 @@ export function DataTable<TData, TValue>({
   onDelete,
   onRowClick,
   setData,
+  filterFields,
+  facetedFilters,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -75,64 +95,81 @@ export function DataTable<TData, TValue>({
       sorting,
     },
   });
-  const [filterColumn, setFilterColumn] = useState<string>(
-    table.getAllColumns()[1].id
-  );
+  const [filterColumn, setFilterColumn] = useState<string>("");
   return (
     <div className="max-w-full h-full">
-      <div className="flex gap-x-2 items-center py-4">
-        <Input
-          placeholder="Search"
-          value={
-            (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
-          }
-          className="h-8 w-full md:w-[250px]"
-        />
-        <div className="flex">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="sm" variant="outline" className="border-dashed">
-                <Filter strokeWidth={1.75} className="w-3.5 h-3.5 mr-2" />
-                Filter
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table.getAllColumns().map((column) => {
-                return (
-                  column.getCanFilter() && (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      checked={column.id === filterColumn}
-                      onCheckedChange={() => setFilterColumn(column.id)}
-                      className="capitalize"
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  )
-                );
-              })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        {table.getFilteredSelectedRowModel().rows.length !== 0 && (
-          <Button
-            size="sm"
-            onClick={() =>
-              onDelete !== undefined &&
-              onDelete(
-                table
-                  .getFilteredSelectedRowModel()
-                  .rows.map((item) => item.original)
-              )
+      {filterFields !== undefined && (
+        <div className="flex flex-col gap-2 items-center py-4 md:flex-row">
+          <Input
+            placeholder="Search"
+            value={
+              (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""
             }
-          >
-            <Trash className="h-4 w-4" />
-          </Button>
-        )}
-      </div>
+            onChange={(event) =>
+              table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+            }
+            className="h-8 w-full md:w-[250px]"
+          />
+          <div className="flex justify-between w-full gap-x-2 md:justify-start md:w-fit">
+            <div className="flex w-full">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-dashed w-full md:w-fit"
+                  >
+                    <Filter strokeWidth={1.75} className="w-3.5 h-3.5 mr-2" />
+                    Filter
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {filterFields.map((filterField, index) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={index}
+                        checked={filterField.key === filterColumn}
+                        onCheckedChange={() => setFilterColumn(filterField.key)}
+                      >
+                        {filterField.name}
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            {facetedFilters !== undefined && (
+              <div className="flex w-full gap-x-2 md:w-fit">
+                {facetedFilters.map((facetedFilter) => (
+                  <Fragment key={facetedFilter.columnName}>
+                    <DataTableFacetedFilter
+                      icon={facetedFilter.icon}
+                      column={table.getColumn(facetedFilter.columnName)}
+                      title={facetedFilter.title}
+                      options={facetedFilter.options}
+                    />
+                  </Fragment>
+                ))}
+              </div>
+            )}
+            {table.getFilteredSelectedRowModel().rows.length !== 0 && (
+              <Button
+                size="sm"
+                onClick={() =>
+                  onDelete !== undefined &&
+                  onDelete(
+                    table
+                      .getFilteredSelectedRowModel()
+                      .rows.map((item) => item.original)
+                  )
+                }
+              >
+                <Trash className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
       <div className="border rounded-md">
         {isLoading ? (
           <div className="space-y-1">
@@ -187,7 +224,7 @@ export function DataTable<TData, TValue>({
                     // }}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="p-3.5">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -202,7 +239,7 @@ export function DataTable<TData, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No results
                   </TableCell>
                 </TableRow>
               )}

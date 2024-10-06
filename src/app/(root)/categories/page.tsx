@@ -21,13 +21,6 @@ export default function Page() {
   const data = categories || [];
   const columns: ColumnDef<OrderCategory>[] = [
     {
-      accessorKey: "icon",
-      header: "Icon",
-      cell: (row) => {
-        return <img src={row.row.original.icon} className="size-9" />;
-      },
-    },
-    {
       accessorKey: "id",
       header: ({ column }) => {
         return (
@@ -42,17 +35,10 @@ export default function Page() {
       },
     },
     {
-      accessorKey: "createdAt",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Created At
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
+      accessorKey: "icon",
+      header: "Icon",
+      cell: (row) => {
+        return <img src={row.row.original.icon} className="size-9" />;
       },
     },
     {
@@ -63,7 +49,12 @@ export default function Page() {
   return (
     <DataCard title="Categories" button={<CreateCategoryButton />}>
       <CreateCategoryModal />
-      <DataTable columns={columns} data={data} isLoading={isLoading} />
+      <DataTable
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        filterFields={[]}
+      />
     </DataCard>
   );
 }

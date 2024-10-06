@@ -7,7 +7,8 @@ import { EmployeeOutput } from "@/shared/api/model";
 import { getEmployee } from "@/shared/api/generated/employee/employee";
 import { DataCard } from "@/widgets/data-card";
 import { Button } from "@/shared/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, BarChart, Globe } from "lucide-react";
+import { languages, levels } from "@/shared/lib/data";
 
 export default function Employees() {
   const { data: employees, isLoading } = useQuery({
@@ -16,6 +17,14 @@ export default function Employees() {
   });
   const data = employees || [];
   const columns: ColumnDef<EmployeeOutput>[] = [
+    {
+      accessorKey: "firstName",
+      header: "Firstname",
+    },
+    {
+      accessorKey: "lastName",
+      header: "Lastname",
+    },
     {
       accessorKey: "telegramId",
       header: "Telegram ID",
@@ -33,24 +42,6 @@ export default function Employees() {
           </Button>
         );
       },
-    },
-    {
-      accessorKey: "firstName",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Firstname
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-    },
-    {
-      accessorKey: "lastName",
-      header: "Lastname",
     },
     {
       accessorKey: "balance",
@@ -71,14 +62,12 @@ export default function Employees() {
       header: "Phone number",
       cell: (row) => (
         <p>
-          {row.row.original.phoneNumber === null ? (
-            "Phone not added"
-          ) : (
+          {row.row.original.phoneNumber !== null && (
             <a
               className="text-blue-500"
-              href={`tel://+${row.row.original.phoneNumber}`}
+              href={`tel://${row.row.original.phoneNumber}`}
             >
-              +{row.row.original.phoneNumber}
+              {row.row.original.phoneNumber}
             </a>
           )}
         </p>
@@ -87,19 +76,23 @@ export default function Employees() {
     {
       accessorKey: "level",
       header: "Level",
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id));
+      },
     },
     {
       accessorKey: "language",
       header: "Language",
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id));
+      },
     },
     {
       accessorKey: "portfolio",
       header: "Portfolio",
       cell: (row) => (
         <p>
-          {row.row.original.portfolio === null ? (
-            "Portfolio not added"
-          ) : (
+          {row.row.original.portfolio !== null && (
             <a className="text-blue-500" href={`${row.row.original.portfolio}`}>
               Portfolio
             </a>
@@ -124,7 +117,31 @@ export default function Employees() {
   ];
   return (
     <DataCard title="Employees">
-      <DataTable columns={columns} data={data} isLoading={isLoading} />
+      <DataTable
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        filterFields={[
+          { name: "Firstname", key: "firstName" },
+          { name: "Lastname", key: "lastName" },
+          { name: "Phone number", key: "phoneNumber" },
+          { name: "Telegram ID", key: "telegramId" },
+        ]}
+        facetedFilters={[
+          {
+            icon: BarChart,
+            columnName: "level",
+            title: "Level",
+            options: levels,
+          },
+          {
+            icon: Globe,
+            columnName: "language",
+            title: "Language",
+            options: languages,
+          },
+        ]}
+      />
     </DataCard>
   );
 }
