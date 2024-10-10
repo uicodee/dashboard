@@ -95,7 +95,7 @@ export function DataTable<TData, TValue>({
       sorting,
     },
   });
-  const [filterColumn, setFilterColumn] = useState<string>("");
+  const [filterColumn, setFilterColumn] = useState<string>();
   return (
     <div className="max-w-full h-full">
       {filterFields !== undefined && (
@@ -103,10 +103,17 @@ export function DataTable<TData, TValue>({
           <Input
             placeholder="Search"
             value={
-              (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""
+              filterColumn !== undefined
+                ? (table.getColumn(filterColumn)?.getFilterValue() as string) ??
+                  ""
+                : ""
             }
             onChange={(event) =>
-              table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+              filterColumn !== undefined
+                ? table
+                    .getColumn(filterColumn)
+                    ?.setFilterValue(event.target.value)
+                : ""
             }
             className="h-8 w-full md:w-[250px]"
           />

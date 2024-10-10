@@ -9,10 +9,13 @@ import { DataCard } from "@/widgets/data-card";
 import { CreateOrderButton, CreateOrderModal } from "@/features/create-order";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { Button } from "@/shared/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Layers3 } from "lucide-react";
 import { EditOrderModal, useEditOrder } from "@/features/edit-order";
+import { levels } from "@/shared/lib/data";
+import { useRouter } from "next/navigation";
 
 export default function Orders() {
+  const router = useRouter();
   const setOpen = useEditOrder((state) => state.setOpen);
   const setOrder = useEditOrder((state) => state.setOrder);
   const queryClient = useQueryClient();
@@ -145,9 +148,24 @@ export default function Orders() {
         onDelete={(data: OrderOutput[]) =>
           mutation.mutate({ ordersIds: data.map((item) => item.id) })
         }
-        onRowClick={() => setOpen(true)}
-        setData={(data) => setOrder(data)}
+        onRowClick={() => console.log(true)}
+        // onRowClick={() => setOpen(true)}
+        // onRowClick={() => {
+        //   router.push()
+        // }}
+        setData={(data) => {
+          router.push(`/orders/${data.id}`);
+          setOrder(data);
+        }}
         filterFields={[{ name: "Author", key: "author" }]}
+        facetedFilters={[
+          {
+            icon: Layers3,
+            columnName: "category",
+            title: "Category",
+            options: levels,
+          },
+        ]}
       />
     </DataCard>
   );

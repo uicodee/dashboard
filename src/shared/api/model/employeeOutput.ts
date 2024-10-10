@@ -20,6 +20,7 @@ export interface EmployeeOutput {
   createdAt: string;
   firstName: string;
   id: number;
+  isVerified?: boolean;
   language: string;
   lastName: string;
   level: string;

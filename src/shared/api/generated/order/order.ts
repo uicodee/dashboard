@@ -7,6 +7,7 @@
 import type {
   DeleteOrder,
   EditOrder,
+  EmployeeOutput,
   OrderInput,
   OrderOutput
 } from '../../model'
@@ -73,6 +74,18 @@ const deleteOrdersOrderDelete = (
       options);
     }
   /**
+ * Get all order responses
+ * @summary Get Order Responses
+ */
+const getOrderResponsesOrderOrderIdResponsesGet = (
+    orderId: number,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<EmployeeOutput[]>(
+      {url: `/order/${orderId}/responses`, method: 'GET'
+    },
+      options);
+    }
+  /**
  * Get order by id
  * @summary Get Order
  */
@@ -95,10 +108,11 @@ const selectRandomEmployeeOrderOrderIdSelectRandomPost = (
     },
       options);
     }
-  return {allOrdersOrderGet,editOrderOrderPut,createOrderOrderPost,deleteOrdersOrderDelete,getOrderOrderOrderIdGet,selectRandomEmployeeOrderOrderIdSelectRandomPost}};
+  return {allOrdersOrderGet,editOrderOrderPut,createOrderOrderPost,deleteOrdersOrderDelete,getOrderResponsesOrderOrderIdResponsesGet,getOrderOrderOrderIdGet,selectRandomEmployeeOrderOrderIdSelectRandomPost}};
 export type AllOrdersOrderGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['allOrdersOrderGet']>>>
 export type EditOrderOrderPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['editOrderOrderPut']>>>
 export type CreateOrderOrderPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['createOrderOrderPost']>>>
 export type DeleteOrdersOrderDeleteResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['deleteOrdersOrderDelete']>>>
+export type GetOrderResponsesOrderOrderIdResponsesGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['getOrderResponsesOrderOrderIdResponsesGet']>>>
 export type GetOrderOrderOrderIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['getOrderOrderOrderIdGet']>>>
 export type SelectRandomEmployeeOrderOrderIdSelectRandomPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getOrder>['selectRandomEmployeeOrderOrderIdSelectRandomPost']>>>

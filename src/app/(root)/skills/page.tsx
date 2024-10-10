@@ -77,6 +77,7 @@ export default function Skills() {
         onDelete={(data: SkillOutput[]) =>
           mutation.mutate({ skillsIds: data.map((item) => item.id) })
         }
+        filterFields={[{ name: "Name", key: "name" }]}
       />
     </DataCard>
   );

@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const api: AxiosInstance = axios.create({
   responseType: "json",
-  withCredentials: false,
+  withCredentials: true,
   baseURL: "https://api.joblance.webtm.ru",
 });
 
