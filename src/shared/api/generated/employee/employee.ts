@@ -5,8 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
-  EmployeeCardNumber,
-  EmployeeCardType,
+  CardInput,
+  CardOutput,
   EmployeeInput,
   EmployeeLanguage,
   EmployeeOutput,
@@ -37,42 +37,6 @@ const registerEmployeeEmployeeRegisterPost = (
       options);
     }
   /**
- * Get all skills
- * @summary All Employee Skills
- */
-const allEmployeeSkillsEmployeeSkillsGet = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<SkillOutput[]>(
-      {url: `/employee/skills`, method: 'GET'
-    },
-      options);
-    }
-  /**
- * Get all orders
- * @summary All Orders
- */
-const allOrdersEmployeeOrderGet = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<OrderOutput[]>(
-      {url: `/employee/order`, method: 'GET'
-    },
-      options);
-    }
-  /**
- * Get all employees
- * @summary Get Employees
- */
-const getEmployeesEmployeeGet = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<EmployeeOutput[]>(
-      {url: `/employee`, method: 'GET'
-    },
-      options);
-    }
-  /**
  * Get my info
  * @summary Get Me
  */
@@ -81,20 +45,6 @@ const getMeEmployeeMeGet = (
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<EmployeeOutput>(
       {url: `/employee/me`, method: 'GET'
-    },
-      options);
-    }
-  /**
- * Update skill
- * @summary Update Skill
- */
-const updateSkillEmployeeSkillPut = (
-    employeeSkill: BodyType<EmployeeSkill>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<EmployeeOutput>(
-      {url: `/employee/skill`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: employeeSkill
     },
       options);
     }
@@ -113,30 +63,78 @@ const updateLanguageEmployeeLanguagePut = (
       options);
     }
   /**
- * Update card number
- * @summary Update Card Number
+ * Get all orders
+ * @summary All Orders
  */
-const updateCardNumberEmployeeCardNumberPut = (
-    employeeCardNumber: BodyType<EmployeeCardNumber>,
+const allOrdersEmployeeOrdersGet = (
+    
  options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<unknown>(
-      {url: `/employee/card-number`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: employeeCardNumber
+      return createInstance<OrderOutput[]>(
+      {url: `/employee/orders`, method: 'GET'
     },
       options);
     }
   /**
- * Update card type
- * @summary Update Card Type
+ * Get all skills
+ * @summary All Employee Skills
  */
-const updateCardTypeEmployeeCardTypePut = (
-    employeeCardType: BodyType<EmployeeCardType>,
+const allEmployeeSkillsEmployeeSkillsGet = (
+    
  options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<unknown>(
-      {url: `/employee/card-type`, method: 'PUT',
+      return createInstance<SkillOutput[]>(
+      {url: `/employee/skills`, method: 'GET'
+    },
+      options);
+    }
+  /**
+ * Update skill
+ * @summary Update Skill
+ */
+const updateSkillEmployeeSkillPut = (
+    employeeSkill: BodyType<EmployeeSkill>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<EmployeeOutput>(
+      {url: `/employee/skill`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
-      data: employeeCardType
+      data: employeeSkill
+    },
+      options);
+    }
+  /**
+ * Get employee cards
+ * @summary Get Cards
+ */
+const getCardsEmployeeCardGet = (
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CardOutput[]>(
+      {url: `/employee/card/`, method: 'GET'
+    },
+      options);
+    }
+  /**
+ * Create card
+ * @summary Create Card
+ */
+const createCardEmployeeCardPost = (
+    cardInput: BodyType<CardInput>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CardOutput>(
+      {url: `/employee/card/`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: cardInput
+    },
+      options);
+    }
+  /**
+ * Get all employees
+ * @summary Get Employees
+ */
+const getEmployeesEmployeeGet = (
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<EmployeeOutput[]>(
+      {url: `/employee/`, method: 'GET'
     },
       options);
     }
@@ -152,14 +150,14 @@ const getEmployeeEmployeeEmployeeIdGet = (
     },
       options);
     }
-  return {registerEmployeeEmployeeRegisterPost,allEmployeeSkillsEmployeeSkillsGet,allOrdersEmployeeOrderGet,getEmployeesEmployeeGet,getMeEmployeeMeGet,updateSkillEmployeeSkillPut,updateLanguageEmployeeLanguagePut,updateCardNumberEmployeeCardNumberPut,updateCardTypeEmployeeCardTypePut,getEmployeeEmployeeEmployeeIdGet}};
+  return {registerEmployeeEmployeeRegisterPost,getMeEmployeeMeGet,updateLanguageEmployeeLanguagePut,allOrdersEmployeeOrdersGet,allEmployeeSkillsEmployeeSkillsGet,updateSkillEmployeeSkillPut,getCardsEmployeeCardGet,createCardEmployeeCardPost,getEmployeesEmployeeGet,getEmployeeEmployeeEmployeeIdGet}};
 export type RegisterEmployeeEmployeeRegisterPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['registerEmployeeEmployeeRegisterPost']>>>
-export type AllEmployeeSkillsEmployeeSkillsGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allEmployeeSkillsEmployeeSkillsGet']>>>
-export type AllOrdersEmployeeOrderGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allOrdersEmployeeOrderGet']>>>
-export type GetEmployeesEmployeeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeesEmployeeGet']>>>
 export type GetMeEmployeeMeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getMeEmployeeMeGet']>>>
-export type UpdateSkillEmployeeSkillPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateSkillEmployeeSkillPut']>>>
 export type UpdateLanguageEmployeeLanguagePutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateLanguageEmployeeLanguagePut']>>>
-export type UpdateCardNumberEmployeeCardNumberPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateCardNumberEmployeeCardNumberPut']>>>
-export type UpdateCardTypeEmployeeCardTypePutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateCardTypeEmployeeCardTypePut']>>>
+export type AllOrdersEmployeeOrdersGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allOrdersEmployeeOrdersGet']>>>
+export type AllEmployeeSkillsEmployeeSkillsGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['allEmployeeSkillsEmployeeSkillsGet']>>>
+export type UpdateSkillEmployeeSkillPutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['updateSkillEmployeeSkillPut']>>>
+export type GetCardsEmployeeCardGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getCardsEmployeeCardGet']>>>
+export type CreateCardEmployeeCardPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['createCardEmployeeCardPost']>>>
+export type GetEmployeesEmployeeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeesEmployeeGet']>>>
 export type GetEmployeeEmployeeEmployeeIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getEmployee>['getEmployeeEmployeeEmployeeIdGet']>>>

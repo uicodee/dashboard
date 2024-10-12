@@ -27,7 +27,7 @@ const allOrdersOrderGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderOutput[]>(
-      {url: `/order`, method: 'GET'
+      {url: `/order/`, method: 'GET'
     },
       options);
     }
@@ -39,7 +39,7 @@ const editOrderOrderPut = (
     editOrder: BodyType<EditOrder>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderOutput>(
-      {url: `/order`, method: 'PUT',
+      {url: `/order/`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
       data: editOrder
     },
@@ -53,7 +53,7 @@ const createOrderOrderPost = (
     orderInput: BodyType<OrderInput>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderOutput>(
-      {url: `/order`, method: 'POST',
+      {url: `/order/`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: orderInput
     },
@@ -67,7 +67,7 @@ const deleteOrdersOrderDelete = (
     deleteOrder: BodyType<DeleteOrder>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<unknown>(
-      {url: `/order`, method: 'DELETE',
+      {url: `/order/`, method: 'DELETE',
       headers: {'Content-Type': 'application/json', },
       data: deleteOrder
     },

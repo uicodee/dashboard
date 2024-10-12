@@ -26,7 +26,7 @@ const allOrderCategoriesCategoryGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderCategory[]>(
-      {url: `/category`, method: 'GET'
+      {url: `/category/`, method: 'GET'
     },
       options);
     }
@@ -41,7 +41,7 @@ const createOrderCategoryCategoryPost = (
 formData.append('file', bodyCreateOrderCategoryCategoryPost.file)
 
       return createInstance<OrderCategory>(
-      {url: `/category`, method: 'POST',
+      {url: `/category/`, method: 'POST',
       headers: {'Content-Type': 'multipart/form-data', },
        data: formData,
         params
@@ -56,7 +56,7 @@ const deleteOrderCategoriesCategoryDelete = (
     deleteOrderCategory: BodyType<DeleteOrderCategory>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<unknown>(
-      {url: `/category`, method: 'DELETE',
+      {url: `/category/`, method: 'DELETE',
       headers: {'Content-Type': 'application/json', },
       data: deleteOrderCategory
     },

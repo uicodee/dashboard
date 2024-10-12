@@ -6,8 +6,6 @@
  */
 import type { EmployeeOutputAbout } from './employeeOutputAbout';
 import type { EmployeeOutputActiveOrder } from './employeeOutputActiveOrder';
-import type { EmployeeOutputCardNumber } from './employeeOutputCardNumber';
-import type { EmployeeOutputCardType } from './employeeOutputCardType';
 import type { EmployeeOutputPhoneNumber } from './employeeOutputPhoneNumber';
 import type { EmployeeOutputPortfolio } from './employeeOutputPortfolio';
 
@@ -15,8 +13,6 @@ export interface EmployeeOutput {
   about?: EmployeeOutputAbout;
   active_order?: EmployeeOutputActiveOrder;
   balance: number;
-  cardNumber?: EmployeeOutputCardNumber;
-  cardType?: EmployeeOutputCardType;
   createdAt: string;
   firstName: string;
   id: number;

@@ -1,6 +1,7 @@
 "use client";
 
 import { getOrder } from "@/shared/api/generated/order/order";
+import { EmployeeOutput } from "@/shared/api/model";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -9,16 +10,13 @@ import {
   BreadcrumbPage,
   BreadcrumbLink,
 } from "@/shared/ui/breadcrumb";
+import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shared/ui/table";
-import { useQuery } from "@tanstack/react-query";
+import { DataCard } from "@/widgets/data-card";
+import { DataTable } from "@/widgets/data-table";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ColumnDef } from "@tanstack/react-table";
+import { Dices } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -28,11 +26,52 @@ export default function Page() {
     queryKey: ["order"],
     queryFn: () => getOrder().getOrderOrderOrderIdGet(Number(orderId)),
   });
-  const { data: orderResponses } = useQuery({
+  const { data: orderResponses, isLoading } = useQuery({
     queryKey: ["orderResponses"],
     queryFn: () =>
       getOrder().getOrderResponsesOrderOrderIdResponsesGet(Number(orderId)),
   });
+  const selectRandom = useMutation({
+    mutationFn: () =>
+      getOrder().selectRandomEmployeeOrderOrderIdSelectRandomPost(
+        Number(orderId)
+      ),
+  });
+  const data = orderResponses || [];
+  const columns: ColumnDef<EmployeeOutput>[] = [
+    {
+      accessorKey: "firstName",
+      header: "Firstname",
+    },
+    {
+      accessorKey: "lastName",
+      header: "Lastname",
+    },
+    {
+      accessorKey: "telegramId",
+      header: "Telegram ID",
+    },
+    {
+      accessorKey: "phoneNumber",
+      header: "Phone number",
+      cell: (row) => (
+        <p>
+          {row.row.original.phoneNumber !== null && (
+            <a
+              className="text-blue-500"
+              href={`tel://${row.row.original.phoneNumber}`}
+            >
+              {row.row.original.phoneNumber}
+            </a>
+          )}
+        </p>
+      ),
+    },
+    {
+      accessorKey: "level",
+      header: "Level",
+    },
+  ];
   return (
     <>
       <Breadcrumb className="ml-2 mt-2 text-base">
@@ -96,55 +135,38 @@ export default function Page() {
           <CardContent className="pt-1 pb-6">
             <div className="flex flex-wrap gap-2">
               {order?.skills.map((item) => (
-                <div key={item.id} className="px-4 py-2 md:py-1 md:text-sm bg-primary-foreground rounded-full">
+                <div
+                  key={item.id}
+                  className="px-4 py-2 md:py-1 md:text-sm bg-primary-foreground rounded-full"
+                >
                   {item.name}
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
-        <Card className="col-span-6">
-          <CardHeader>
-            <CardTitle>Responses</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-1 pb-6 px-6">
-            <div className="border rounded-md">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Firstname</TableHead>
-                    <TableHead>Lastname</TableHead>
-                    <TableHead>Level</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {orderResponses !== undefined &&
-                  orderResponses?.length > 0 ? (
-                    orderResponses.map((employee) => (
-                      <TableRow key={employee.id}>
-                        <TableCell className="p-3.5">
-                          {employee.firstName}
-                        </TableCell>
-                        <TableCell className="p-3.5">
-                          {employee.lastName}
-                        </TableCell>
-                        <TableCell className="p-3.5">
-                          {employee.level}
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={3} className="h-24 text-center">
-                        No results
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
+        <DataCard
+          title="Responses"
+          className="col-span-6"
+          button={
+            <Button
+              onClick={() => {
+                selectRandom.mutate();
+              }}
+              disabled={order?.isExecutorSelected}
+            >
+              <Dices className="w-4 h-4 mr-2" />
+              Select random
+            </Button>
+          }
+        >
+          <DataTable
+            columns={columns}
+            data={data}
+            isLoading={isLoading}
+            className="mt-4"
+          />
+        </DataCard>
       </div>
     </>
   );

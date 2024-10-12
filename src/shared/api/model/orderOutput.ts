@@ -13,6 +13,7 @@ export interface OrderOutput {
   createdAt: string;
   deadline: number;
   id: number;
+  isExecutorSelected: boolean;
   price: number;
   skills: SkillOutput[];
   /**

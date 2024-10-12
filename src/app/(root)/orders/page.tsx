@@ -9,7 +9,7 @@ import { DataCard } from "@/widgets/data-card";
 import { CreateOrderButton, CreateOrderModal } from "@/features/create-order";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { Button } from "@/shared/ui/button";
-import { ArrowUpDown, Layers3 } from "lucide-react";
+import { ArrowUpDown, Check, Layers3, X } from "lucide-react";
 import { EditOrderModal, useEditOrder } from "@/features/edit-order";
 import { levels } from "@/shared/lib/data";
 import { useRouter } from "next/navigation";
@@ -93,6 +93,21 @@ export default function Orders() {
     {
       accessorKey: "author",
       header: "Author",
+    },
+    {
+      accessorKey: "isExecutorSelected",
+      header: "Executor",
+      cell: ({ row }) => {
+        return row?.original.isExecutorSelected ? (
+          <div className="flex items-center justify-center rounded-full w-6 h-6 bg-green-400 text-white">
+            <Check className="h-4 w-4" />
+          </div>
+        ) : (
+          <div className="flex items-center justify-center rounded-full w-6 h-6 bg-red-400 text-white">
+            <X className="h-4 w-4" />
+          </div>
+        );
+      },
     },
     {
       accessorKey: "deadline",

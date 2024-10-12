@@ -20,11 +20,25 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
  * Get all employee order responses
  * @summary Get Employee Responses
  */
-const getEmployeeResponsesResponseAllGet = (
+const getEmployeeResponsesResponseGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<OrderResponse[]>(
-      {url: `/response/all`, method: 'GET'
+      {url: `/response/`, method: 'GET'
+    },
+      options);
+    }
+  /**
+ * New order response
+ * @summary New Order Response
+ */
+const newOrderResponseResponsePost = (
+    response: BodyType<Response>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderResponse>(
+      {url: `/response/`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: response
     },
       options);
     }
@@ -40,21 +54,7 @@ const getEmployeeResponseResponseResponseIdGet = (
     },
       options);
     }
-  /**
- * New order response
- * @summary New Order Response
- */
-const newOrderResponseResponseNewPost = (
-    response: BodyType<Response>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<OrderResponse>(
-      {url: `/response/new`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: response
-    },
-      options);
-    }
-  return {getEmployeeResponsesResponseAllGet,getEmployeeResponseResponseResponseIdGet,newOrderResponseResponseNewPost}};
-export type GetEmployeeResponsesResponseAllGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getResponse>['getEmployeeResponsesResponseAllGet']>>>
+  return {getEmployeeResponsesResponseGet,newOrderResponseResponsePost,getEmployeeResponseResponseResponseIdGet}};
+export type GetEmployeeResponsesResponseGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getResponse>['getEmployeeResponsesResponseGet']>>>
+export type NewOrderResponseResponsePostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getResponse>['newOrderResponseResponsePost']>>>
 export type GetEmployeeResponseResponseResponseIdGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getResponse>['getEmployeeResponseResponseResponseIdGet']>>>
-export type NewOrderResponseResponseNewPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getResponse>['newOrderResponseResponseNewPost']>>>

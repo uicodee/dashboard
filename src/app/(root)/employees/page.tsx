@@ -9,8 +9,10 @@ import { DataCard } from "@/widgets/data-card";
 import { Button } from "@/shared/ui/button";
 import { ArrowUpDown, BarChart, Globe } from "lucide-react";
 import { languages, levels } from "@/shared/lib/data";
+import { useRouter } from "next/navigation";
 
 export default function Employees() {
+  const router = useRouter();
   const { data: employees, isLoading } = useQuery({
     queryKey: ["employees"],
     queryFn: () => getEmployee().getEmployeesEmployeeGet(),
@@ -121,6 +123,15 @@ export default function Employees() {
         columns={columns}
         data={data}
         isLoading={isLoading}
+        onRowClick={() => console.log(true)}
+        // onRowClick={() => setOpen(true)}
+        // onRowClick={() => {
+        //   router.push()
+        // }}
+        setData={(data) => {
+          router.push(`/employees/${data.id}`);
+          // setOrder(data);
+        }}
         filterFields={[
           { name: "Firstname", key: "firstName" },
           { name: "Lastname", key: "lastName" },

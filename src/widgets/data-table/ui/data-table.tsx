@@ -35,13 +35,15 @@ import {
 import { Skeleton } from "@/shared/ui/skeleton";
 import * as React from "react";
 import { DataTableFacetedFilter } from "@/widgets/data-table";
+import { cn } from "@/shared/ui/utils";
 
 interface FilterField {
   name: string;
   key: string;
 }
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue>
+  extends React.HTMLAttributes<HTMLDivElement> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   isLoading: boolean;
@@ -70,6 +72,7 @@ export function DataTable<TData, TValue>({
   setData,
   filterFields,
   facetedFilters,
+  className,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -97,7 +100,7 @@ export function DataTable<TData, TValue>({
   });
   const [filterColumn, setFilterColumn] = useState<string>();
   return (
-    <div className="max-w-full h-full">
+    <div className={cn("max-w-full h-full", className)}>
       {filterFields !== undefined && (
         <div className="flex flex-col gap-2 items-center py-4 md:flex-row">
           <Input

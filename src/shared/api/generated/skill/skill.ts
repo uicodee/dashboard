@@ -26,7 +26,7 @@ const allSkillsSkillGet = (
     
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<SkillOutput[]>(
-      {url: `/skill`, method: 'GET'
+      {url: `/skill/`, method: 'GET'
     },
       options);
     }
@@ -38,7 +38,7 @@ const updateSkillSkillPut = (
     updateSkill: BodyType<UpdateSkill>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<SkillOutput>(
-      {url: `/skill`, method: 'PUT',
+      {url: `/skill/`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
       data: updateSkill
     },
@@ -52,7 +52,7 @@ const createSkillSkillPost = (
     skillInput: BodyType<SkillInput>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<SkillOutput>(
-      {url: `/skill`, method: 'POST',
+      {url: `/skill/`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: skillInput
     },
@@ -66,7 +66,7 @@ const deleteSkillSkillDelete = (
     deleteSkill: BodyType<DeleteSkill>,
  options?: SecondParameter<typeof createInstance>,) => {
       return createInstance<unknown>(
-      {url: `/skill`, method: 'DELETE',
+      {url: `/skill/`, method: 'DELETE',
       headers: {'Content-Type': 'application/json', },
       data: deleteSkill
     },
