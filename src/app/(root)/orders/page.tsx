@@ -9,7 +9,7 @@ import { DataCard } from "@/widgets/data-card";
 import { CreateOrderButton, CreateOrderModal } from "@/features/create-order";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { Button } from "@/shared/ui/button";
-import { ArrowUpDown, Check, Layers3, X } from "lucide-react";
+import { ArrowUpDown, Check, Layers3, Pencil, X } from "lucide-react";
 import { EditOrderModal, useEditOrder } from "@/features/edit-order";
 import { levels } from "@/shared/lib/data";
 import { useRouter } from "next/navigation";
@@ -77,20 +77,6 @@ export default function Orders() {
       header: "Title",
     },
     {
-      accessorKey: "createdAt",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Created At
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-    },
-    {
       accessorKey: "author",
       header: "Author",
     },
@@ -139,17 +125,22 @@ export default function Orders() {
       cell: (row) => <p>{row.row.original.price.toLocaleString("en-US")}</p>,
     },
     {
-      accessorKey: "technicalTask",
-      header: "Task",
-      cell: (row) => (
-        <a
-          className="text-blue-500 hover:underline underline-offset-4"
-          href={row.row.original.technicalTask}
-          target="_blank"
-        >
-          Task
-        </a>
-      ),
+      header: "Actions",
+      cell: ({ row }) => {
+        return (
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOrder(row.original);
+              setOpen(true);
+            }}
+          >
+            <Pencil className="w-4 h-4" />
+          </Button>
+        );
+      },
     },
   ];
   return (

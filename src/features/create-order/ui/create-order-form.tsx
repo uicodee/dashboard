@@ -29,8 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select";
-import MultipleSelector from "@/shared/ui/multiselect";
-import { Option } from "@/shared/ui/multiselect";
+import { MultiSelect } from "@/shared/ui/multi-select";
 
 export const CreateOrderForm = () => {
   const queryClient = useQueryClient();
@@ -59,6 +58,7 @@ export const CreateOrderForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
     const variables: OrderInput = {
       ...values,
       skillsIds: values.skillsIds.map((skill) => Number(skill.value)),
@@ -89,7 +89,7 @@ export const CreateOrderForm = () => {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="col-span-1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -172,22 +172,19 @@ export const CreateOrderForm = () => {
               <FormLabel>Skills</FormLabel>
               <FormControl>
                 {isFetched ? (
-                  <MultipleSelector
+                  <MultiSelect
                     {...field}
-                    badgeClassName="text-white"
-                    defaultOptions={skills?.map(
-                      (skill) =>
-                        ({
-                          value: String(skill.id),
-                          label: skill.name,
-                        } as Option)
-                    )}
-                    placeholder="Select skills"
-                    emptyIndicator={
-                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        no results found.
-                      </p>
+                    modalPopover
+                    options={
+                      skills?.map((skill) => ({
+                        label: skill.name,
+                        value: String(skill.id),
+                      })) as { value: string; label: string }[]
                     }
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    placeholder="Select options"
+                    variant="inverted"
                   />
                 ) : (
                   <div className="w-full h-8 bg-muted rounded-md" />

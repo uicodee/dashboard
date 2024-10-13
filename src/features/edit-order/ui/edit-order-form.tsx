@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSkill } from "@/shared/api/generated/skill/skill.ts";
-import MultipleSelector, { Option } from "@/shared/ui/multiselect.tsx";
 import { getOrder } from "@/shared/api/generated/order/order.ts";
 import { EditOrder, OrderInput } from "@/shared/api/model";
 import { getCategory } from "@/shared/api/generated/category/category";
@@ -30,12 +29,13 @@ import {
   SelectValue,
 } from "@/shared/ui/select";
 import { useEditOrder } from "../model/store";
+import { MultiSelect } from "@/shared/ui/multi-select";
 
 export const EditOrderForm = () => {
   const queryClient = useQueryClient();
   const order = useEditOrder((state) => state.order);
   const setOpen = useEditOrder((state) => state.setOpen);
-  const { data: skills, isLoading } = useQuery({
+  const { data: skills, isFetched } = useQuery({
     queryKey: ["skills"],
     queryFn: () => getSkill().allSkillsSkillGet(),
   });
@@ -62,10 +62,9 @@ export const EditOrderForm = () => {
       technicalTask: order?.technicalTask,
       price: order?.price,
       categoryId: order?.category.id,
-      // skillsIds: order?.skills?.map((skill) => ({
-      //   value: String(skill.id),
-      //   label: skill.name,
-      // })),
+      skillsIds: order?.skills.map((item) => {
+        return { label: item.name, value: String(item.id) };
+      }),
     },
   });
 
@@ -185,23 +184,25 @@ export const EditOrderForm = () => {
             <FormItem>
               <FormLabel>Skills</FormLabel>
               <FormControl>
-                <MultipleSelector
-                  {...field}
-                  badgeClassName="text-white"
-                  defaultOptions={skills?.map(
-                    (skill) =>
-                      ({
-                        value: String(skill.id),
+                {isFetched ? (
+                  <MultiSelect
+                    {...field}
+                    defaultValue={field.value}
+                    modalPopover
+                    options={
+                      skills?.map((skill) => ({
                         label: skill.name,
-                      } as Option)
-                  )}
-                  placeholder="Select skills"
-                  emptyIndicator={
-                    <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                      no results found.
-                    </p>
-                  }
-                />
+                        value: String(skill.id),
+                      })) as { value: string; label: string }[]
+                    }
+                    onValueChange={field.onChange}
+                    placeholder="Select options"
+                    variant="inverted"
+                    animation={0}
+                  />
+                ) : (
+                  <div className="w-full h-8 bg-muted rounded-md" />
+                )}
               </FormControl>
               <FormMessage />
             </FormItem>
