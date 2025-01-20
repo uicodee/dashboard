@@ -5,21 +5,23 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { OrderCategory } from './orderCategory';
+import type { Currency } from './currency';
+import type { DeadlineType } from './deadlineType';
 import type { SkillOutput } from './skillOutput';
+import type { OrderStatus } from './orderStatus';
 
 export interface OrderOutput {
   author: string;
   category: OrderCategory;
   createdAt: string;
+  currency: Currency;
   deadline: number;
+  deadlineType: DeadlineType;
   id: number;
   isExecutorSelected: boolean;
   price: number;
   skills: SkillOutput[];
-  /**
-   * @minLength 1
-   * @maxLength 2083
-   */
+  status: OrderStatus;
   technicalTask: string;
   title: string;
   updatedAt: string;

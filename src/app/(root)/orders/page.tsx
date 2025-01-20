@@ -9,9 +9,9 @@ import { DataCard } from "@/widgets/data-card";
 import { CreateOrderButton, CreateOrderModal } from "@/features/create-order";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { Button } from "@/shared/ui/button";
-import { ArrowUpDown, Check, Layers3, Pencil, X } from "lucide-react";
+import { ArrowUpDown, Check, Database, Pencil, X } from "lucide-react";
 import { EditOrderModal, useEditOrder } from "@/features/edit-order";
-import { levels } from "@/shared/lib/data";
+import { orderStatuses } from "@/shared/lib/data";
 import { useRouter } from "next/navigation";
 
 export default function Orders() {
@@ -125,6 +125,10 @@ export default function Orders() {
       cell: (row) => <p>{row.row.original.price.toLocaleString("en-US")}</p>,
     },
     {
+      accessorKey: "status",
+      header: "Status",
+    },
+    {
       header: "Actions",
       cell: ({ row }) => {
         return (
@@ -166,10 +170,10 @@ export default function Orders() {
         filterFields={[{ name: "Author", key: "author" }]}
         facetedFilters={[
           {
-            icon: Layers3,
-            columnName: "category",
-            title: "Category",
-            options: levels,
+            icon: Database,
+            columnName: "status",
+            title: "Status",
+            options: orderStatuses,
           },
         ]}
       />

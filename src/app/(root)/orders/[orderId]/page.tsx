@@ -16,11 +16,13 @@ import { DataCard } from "@/widgets/data-card";
 import { DataTable } from "@/widgets/data-table";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
-import { Dices } from "lucide-react";
+import { ArrowUpDown, Dices } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+
   const { orderId } = useParams<{ orderId: string }>();
   const { data: order } = useQuery({
     queryKey: ["order"],
@@ -44,32 +46,22 @@ export default function Page() {
       header: "Firstname",
     },
     {
-      accessorKey: "lastName",
-      header: "Lastname",
-    },
-    {
       accessorKey: "telegramId",
       header: "Telegram ID",
     },
     {
-      accessorKey: "phoneNumber",
-      header: "Phone number",
-      cell: (row) => (
-        <p>
-          {row.row.original.phoneNumber !== null && (
-            <a
-              className="text-blue-500"
-              href={`tel://${row.row.original.phoneNumber}`}
-            >
-              {row.row.original.phoneNumber}
-            </a>
-          )}
-        </p>
-      ),
-    },
-    {
-      accessorKey: "level",
-      header: "Level",
+      accessorKey: "createdAt",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Created At
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
   ];
   return (
@@ -100,7 +92,7 @@ export default function Page() {
             <CardTitle>Price</CardTitle>
           </CardHeader>
           <CardContent className="pt-1 pb-6">
-            {order?.price.toLocaleString("en-US")} sums
+            {order?.price.toLocaleString("en-US")} {order?.currency}
           </CardContent>
         </Card>
         <Card className="col-span-3 md:col-span-2">
@@ -108,7 +100,7 @@ export default function Page() {
             <CardTitle>Deadline</CardTitle>
           </CardHeader>
           <CardContent className="pt-1 pb-6">
-            {order?.deadline} days
+            {order?.deadline} {order?.deadlineType}
           </CardContent>
         </Card>
         <Card className="col-span-6 md:col-span-2">
@@ -153,18 +145,30 @@ export default function Page() {
               onClick={() => {
                 selectRandom.mutate();
               }}
-              disabled={order?.isExecutorSelected}
+              disabled={
+                order?.isExecutorSelected || orderResponses?.length === 0
+              }
             >
               <Dices className="w-4 h-4 mr-2" />
               Select random
             </Button>
           }
         >
-          <DataTable
+          {/* <DataTable
             columns={columns}
             data={data}
             isLoading={isLoading}
             className="mt-4"
+          /> */}
+          <DataTable
+            columns={columns}
+            data={data}
+            isLoading={isLoading}
+            onRowClick={() => console.log(true)}
+            className="mt-4"
+            setData={(data) => {
+              router.push(`/employees/${data.id}`);
+            }}
           />
         </DataCard>
       </div>

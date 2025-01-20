@@ -18,7 +18,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSkill } from "@/shared/api/generated/skill/skill.ts";
 import { getOrder } from "@/shared/api/generated/order/order.ts";
 import { useCreateOrder } from "@/features/create-order";
-import { OrderInput } from "@/shared/api/model";
+import { Currency, DeadlineType, OrderInput } from "@/shared/api/model";
 import { getCategory } from "@/shared/api/generated/category/category";
 import {
   Select,
@@ -30,10 +30,12 @@ import {
   SelectValue,
 } from "@/shared/ui/select";
 import { MultiSelect } from "@/shared/ui/multi-select";
+import { RichTextEditor } from "@/widgets/rich-text";
+import { LoadingButton } from "@/widgets/loading-button";
 
 export const CreateOrderForm = () => {
   const queryClient = useQueryClient();
-  const setOpen = useCreateOrder((state) => state.setOpen);
+  const { isMutating, setIsMutating, setOpen } = useCreateOrder();
   const { data: skills, isFetched } = useQuery({
     queryKey: ["skills"],
     queryFn: () => getSkill().allSkillsSkillGet(),
@@ -44,21 +46,26 @@ export const CreateOrderForm = () => {
   });
   const mutation = useMutation({
     mutationFn: async (data: OrderInput) => {
+      setIsMutating(true);
       await getOrder().createOrderOrderPost(data);
     },
     onSuccess: () => {
-      queryClient
-        .invalidateQueries({ queryKey: ["orders"] })
-        .then(() => setOpen(false));
+      queryClient.invalidateQueries({ queryKey: ["orders"] }).then(() => {
+        setIsMutating(false);
+        setOpen(false);
+      });
     },
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      deadlineType: DeadlineType.day,
+      currency: Currency.uzs,
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const variables: OrderInput = {
       ...values,
       skillsIds: values.skillsIds.map((skill) => Number(skill.value)),
@@ -95,19 +102,49 @@ export const CreateOrderForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="deadline"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Deadline</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-x-2">
+          <FormField
+            control={form.control}
+            name="deadline"
+            render={({ field }) => (
+              <FormItem className="w-7/12">
+                <FormLabel>Deadline</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="deadlineType"
+            render={({ field }) => (
+              <FormItem className="w-5/12">
+                <FormLabel>Type</FormLabel>
+                <FormControl>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="hour">Hour</SelectItem>
+                        <SelectItem value="day">Day</SelectItem>
+                        <SelectItem value="month">Month</SelectItem>
+                        <SelectItem value="year">Year</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="technicalTask"
@@ -115,25 +152,53 @@ export const CreateOrderForm = () => {
             <FormItem>
               <FormLabel>Task</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <RichTextEditor {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-x-2">
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem className="w-7/12">
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="currency"
+            render={({ field }) => (
+              <FormItem className="w-5/12">
+                <FormLabel>Currency</FormLabel>
+                <FormControl>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="uzs">UZS</SelectItem>
+                        <SelectItem value="usd">USD</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="categoryId"
@@ -194,9 +259,13 @@ export const CreateOrderForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Submit
-        </Button>
+        {isMutating ? (
+          <LoadingButton className="w-full" />
+        ) : (
+          <Button type="submit" className="w-full" disabled={isMutating}>
+            Submit
+          </Button>
+        )}
       </form>
     </Form>
   );

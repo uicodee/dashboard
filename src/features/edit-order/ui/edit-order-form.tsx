@@ -30,11 +30,12 @@ import {
 } from "@/shared/ui/select";
 import { useEditOrder } from "../model/store";
 import { MultiSelect } from "@/shared/ui/multi-select";
+import { RichTextEditor } from "@/widgets/rich-text";
+import { LoadingButton } from "@/widgets/loading-button";
 
 export const EditOrderForm = () => {
   const queryClient = useQueryClient();
-  const order = useEditOrder((state) => state.order);
-  const setOpen = useEditOrder((state) => state.setOpen);
+  const { order, isMutating, setIsMutating, setOpen } = useEditOrder();
   const { data: skills, isFetched } = useQuery({
     queryKey: ["skills"],
     queryFn: () => getSkill().allSkillsSkillGet(),
@@ -45,9 +46,11 @@ export const EditOrderForm = () => {
   });
   const mutation = useMutation({
     mutationFn: async (data: EditOrder) => {
+      setIsMutating(true);
       await getOrder().editOrderOrderPut(data);
     },
     onSuccess: () => {
+      setIsMutating(false);
       queryClient
         .invalidateQueries({ queryKey: ["orders"] })
         .then(() => setOpen(false));
@@ -59,8 +62,10 @@ export const EditOrderForm = () => {
       author: order?.author,
       title: order?.title,
       deadline: order?.deadline,
+      deadlineType: order?.deadlineType,
       technicalTask: order?.technicalTask,
       price: order?.price,
+      currency: order?.currency,
       categoryId: order?.category.id,
       skillsIds: order?.skills.map((item) => {
         return { label: item.name, value: String(item.id) };
@@ -105,19 +110,49 @@ export const EditOrderForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="deadline"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Deadline</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-x-2">
+          <FormField
+            control={form.control}
+            name="deadline"
+            render={({ field }) => (
+              <FormItem className="w-7/12">
+                <FormLabel>Deadline</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="deadlineType"
+            render={({ field }) => (
+              <FormItem className="w-5/12">
+                <FormLabel>Type</FormLabel>
+                <FormControl>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="hour">Hour</SelectItem>
+                        <SelectItem value="day">Day</SelectItem>
+                        <SelectItem value="month">Month</SelectItem>
+                        <SelectItem value="year">Year</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="technicalTask"
@@ -125,25 +160,53 @@ export const EditOrderForm = () => {
             <FormItem>
               <FormLabel>Task</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <RichTextEditor {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-x-2">
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem className="w-7/12">
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="currency"
+            render={({ field }) => (
+              <FormItem className="w-5/12">
+                <FormLabel>Currency</FormLabel>
+                <FormControl>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="uzs">UZS</SelectItem>
+                        <SelectItem value="usd">USD</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="categoryId"
@@ -208,9 +271,13 @@ export const EditOrderForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Submit
-        </Button>
+        {isMutating ? (
+          <LoadingButton className="w-full" />
+        ) : (
+          <Button type="submit" className="w-full" disabled={isMutating}>
+            Submit
+          </Button>
+        )}
       </form>
     </Form>
   );

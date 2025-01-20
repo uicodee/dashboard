@@ -15,7 +15,7 @@ export const CreateOrderModal = () => {
     <Credenza open={open} onOpenChange={() => setOpen(false)}>
       <CredenzaContent>
         <CredenzaHeader>
-          <CredenzaTitle>Order</CredenzaTitle>
+          <CredenzaTitle>Create order</CredenzaTitle>
         </CredenzaHeader>
         <CredenzaBody className="mb-4">
           <CreateOrderForm />

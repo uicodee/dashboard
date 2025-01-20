@@ -4,9 +4,10 @@
  * FastAPI
  * OpenAPI spec version: 1.0.0
  */
+import type { CardType } from './cardType';
 
 export interface CardOutput {
-  cardType: string;
+  cardType: CardType;
   expiresAt: string;
   id: number;
   isPrimary: boolean;

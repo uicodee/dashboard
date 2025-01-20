@@ -24,10 +24,6 @@ export default function Employees() {
       header: "Firstname",
     },
     {
-      accessorKey: "lastName",
-      header: "Lastname",
-    },
-    {
       accessorKey: "telegramId",
       header: "Telegram ID",
     },
@@ -45,77 +41,6 @@ export default function Employees() {
         );
       },
     },
-    {
-      accessorKey: "balance",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Balance
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-    },
-    {
-      accessorKey: "phoneNumber",
-      header: "Phone number",
-      cell: (row) => (
-        <p>
-          {row.row.original.phoneNumber !== null && (
-            <a
-              className="text-blue-500"
-              href={`tel://${row.row.original.phoneNumber}`}
-            >
-              {row.row.original.phoneNumber}
-            </a>
-          )}
-        </p>
-      ),
-    },
-    {
-      accessorKey: "level",
-      header: "Level",
-      filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id));
-      },
-    },
-    {
-      accessorKey: "language",
-      header: "Language",
-      filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id));
-      },
-    },
-    {
-      accessorKey: "portfolio",
-      header: "Portfolio",
-      cell: (row) => (
-        <p>
-          {row.row.original.portfolio !== null && (
-            <a className="text-blue-500" href={`${row.row.original.portfolio}`}>
-              Portfolio
-            </a>
-          )}
-        </p>
-      ),
-    },
-    {
-      accessorKey: "rating",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Rating
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-    },
   ];
   return (
     <DataCard title="Employees">
@@ -124,13 +49,8 @@ export default function Employees() {
         data={data}
         isLoading={isLoading}
         onRowClick={() => console.log(true)}
-        // onRowClick={() => setOpen(true)}
-        // onRowClick={() => {
-        //   router.push()
-        // }}
         setData={(data) => {
           router.push(`/employees/${data.id}`);
-          // setOrder(data);
         }}
         filterFields={[
           { name: "Firstname", key: "firstName" },

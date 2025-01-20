@@ -17,7 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 export default function Page() {
   const { employeeId } = useParams<{ employeeId: string }>();
   const { data: employee, isLoading } = useQuery({
-    queryKey: ["employee"],
+    queryKey: ["employee", employeeId],
     queryFn: () =>
       getEmployee().getEmployeeEmployeeEmployeeIdGet(Number(employeeId)),
   });

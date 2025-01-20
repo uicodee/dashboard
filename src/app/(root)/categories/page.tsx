@@ -53,7 +53,7 @@ export default function Page() {
         columns={columns}
         data={data}
         isLoading={isLoading}
-        filterFields={[]}
+        filterFields={[{ name: "Name", key: "name" }]}
       />
     </DataCard>
   );

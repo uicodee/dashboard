@@ -1,4 +1,14 @@
-import { Cat, Rabbit, Snail } from "lucide-react";
+import {
+  Cat,
+  Check,
+  CheckCheck,
+  Clock,
+  MailCheck,
+  MailX,
+  Rabbit,
+  Snail,
+  X,
+} from "lucide-react";
 
 export const levels = [
   {
@@ -18,6 +28,24 @@ export const levels = [
   },
 ];
 
+export const jobStatuses = [
+  {
+    value: "done",
+    label: "Done",
+    icon: MailCheck,
+  },
+  {
+    value: "pending",
+    label: "Pending",
+    icon: Clock,
+  },
+  {
+    value: "failed",
+    label: "Failed",
+    icon: MailX,
+  },
+];
+
 export const languages = [
   {
     value: "uz",
@@ -30,5 +58,28 @@ export const languages = [
   {
     value: "en",
     label: "English",
+  },
+];
+
+export const orderStatuses = [
+  {
+    value: "open",
+    label: "Open",
+    icon: Check,
+  },
+  {
+    value: "close",
+    label: "Finished",
+    icon: CheckCheck,
+  },
+  {
+    value: "processing",
+    label: "Processing",
+    icon: Clock,
+  },
+  {
+    value: "canceled",
+    label: "Canceled",
+    icon: X,
   },
 ];

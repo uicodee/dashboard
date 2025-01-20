@@ -1,11 +1,15 @@
-import {create} from 'zustand'
+import { create } from "zustand";
 
 interface CreateOrderState {
-    open: boolean
-    setOpen: (open: boolean) => void
+  isMutating: boolean;
+  open: boolean;
+  setIsMutating: (isMutating: boolean) => void;
+  setOpen: (open: boolean) => void;
 }
 
 export const useCreateOrder = create<CreateOrderState>()((set) => ({
-    open: false,
-    setOpen: (open) => set(() => ({open: open})),
-}))
+  isMutating: false,
+  open: false,
+  setIsMutating: (isMutating) => set(() => ({ isMutating: isMutating })),
+  setOpen: (open) => set(() => ({ open: open })),
+}));

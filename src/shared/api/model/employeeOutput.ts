@@ -6,13 +6,15 @@
  */
 import type { EmployeeOutputAbout } from './employeeOutputAbout';
 import type { EmployeeOutputActiveOrder } from './employeeOutputActiveOrder';
+import type { CardOutput } from './cardOutput';
 import type { EmployeeOutputPhoneNumber } from './employeeOutputPhoneNumber';
 import type { EmployeeOutputPortfolio } from './employeeOutputPortfolio';
 
 export interface EmployeeOutput {
   about?: EmployeeOutputAbout;
-  active_order?: EmployeeOutputActiveOrder;
+  activeOrder?: EmployeeOutputActiveOrder;
   balance: number;
+  cards: CardOutput[];
   createdAt: string;
   firstName: string;
   id: number;

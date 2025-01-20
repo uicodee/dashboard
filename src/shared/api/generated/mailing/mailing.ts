@@ -5,7 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
-  Mail
+  MailInput,
+  MailOutput
 } from '../../model'
 import { createInstance } from '../../http/index';
 import type { BodyType } from '../../http/index';
@@ -16,17 +17,29 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
   export const getMailing = () => {
 /**
- * @summary New Mailing
+ * @summary Get Mailings
  */
-const newMailingMailingNewPost = (
-    mail: BodyType<Mail>,
+const getMailingsMailingGet = (
+    
  options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<unknown>(
-      {url: `/mailing/new`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: mail
+      return createInstance<MailOutput[]>(
+      {url: `/mailing`, method: 'GET'
     },
       options);
     }
-  return {newMailingMailingNewPost}};
-export type NewMailingMailingNewPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getMailing>['newMailingMailingNewPost']>>>
+  /**
+ * @summary New Mailing
+ */
+const newMailingMailingPost = (
+    mailInput: BodyType<MailInput>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<unknown>(
+      {url: `/mailing/`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: mailInput
+    },
+      options);
+    }
+  return {getMailingsMailingGet,newMailingMailingPost}};
+export type GetMailingsMailingGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getMailing>['getMailingsMailingGet']>>>
+export type NewMailingMailingPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getMailing>['newMailingMailingPost']>>>

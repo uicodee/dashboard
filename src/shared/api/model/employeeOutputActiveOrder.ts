@@ -4,6 +4,6 @@
  * FastAPI
  * OpenAPI spec version: 1.0.0
  */
-import type { OrderOutput } from './orderOutput';
+import type { EmployeeActiveOrder } from './employeeActiveOrder';
 
-export type EmployeeOutputActiveOrder = OrderOutput | null;
+export type EmployeeOutputActiveOrder = EmployeeActiveOrder | null;

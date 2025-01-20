@@ -4,13 +4,17 @@
  * FastAPI
  * OpenAPI spec version: 1.0.0
  */
+import type { Currency } from './currency';
+import type { DeadlineType } from './deadlineType';
 
 export interface EditOrder {
   author: string;
   /** */
   categoryId: number;
+  currency: Currency;
   /** */
   deadline: number;
+  deadlineType: DeadlineType;
   orderId: number;
   price: number;
   skillsIds: number[];
