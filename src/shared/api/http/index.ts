@@ -3,8 +3,8 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 const api: AxiosInstance = axios.create({
   responseType: "json",
   withCredentials: true,
-  // baseURL: "https://api.joblance.webtm.ru",
-  baseURL: "https://shore-morocco-surrounded-ashley.trycloudflare.com",
+  baseURL: "https://api.joblance.webtm.ru",
+  // baseURL: "https://shore-morocco-surrounded-ashley.trycloudflare.com",
 });
 
 api.interceptors.request.use((config) => {
